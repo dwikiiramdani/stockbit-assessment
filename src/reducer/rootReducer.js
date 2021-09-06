@@ -1,31 +1,32 @@
-import {RETRIEVE_MOVIE_LIST, RETRIEVE_MOVIE_SEARCH, RETRIEVE_MOVIE_SEARCH_MORE} from '../util/types'
+import { RETRIEVE_MOVIE_LIST, RETRIEVE_MOVIE_SEARCH, RETRIEVE_MOVIE_SEARCH_MORE } from '../util/types'
 
 const initialState = {
-    movies:[],
+    movies: [],
     totalResults: 0,
 }
 
-function rootReducer(state = initialState, action){
+function rootReducer(state = initialState, action) {
 
-    switch(action.type){
+    switch (action.type) {
 
         case RETRIEVE_MOVIE_LIST:
-        return {
-            movies:action.data,
-            totalResults: action.totalResults,
-        }
+            return {
+                movies: action.data,
+                totalResults: action.totalResults,
+            }
 
         case RETRIEVE_MOVIE_SEARCH:
-        return {
-            movies:action.data,
-            totalResults: action.totalResults,
-        }
+            return {
+                movies: action.data,
+                totalResults: action.totalResults,
+            }
 
         case RETRIEVE_MOVIE_SEARCH_MORE:
-        return {
-            movies:action.data,
-            totalResults: action.totalResults,
-        }
+            var combinedMovie = state.movies.concat(action.data)
+            return {
+                movies: combinedMovie,
+                totalResults: action.totalResults,
+            }
 
         default: return state
     }

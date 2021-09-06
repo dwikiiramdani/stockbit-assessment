@@ -3,8 +3,11 @@ import axios from 'axios'
 
 export const getMovieList = () => async dispatch => {
     try {
-    const res = await axios.get(`http://www.omdbapi.com/?apikey=faf7e5bb&s=Batman&page=2`)
-    console.log(res.data)
+    const res = await axios({
+      method: 'GET',
+      url: "http://www.omdbapi.com/?apikey=faf7e5bb&",
+      params: {s: "Batman", page: 1}
+    })
     dispatch({
       type: RETRIEVE_MOVIE_LIST,
       data: res.data.Search, 
@@ -22,8 +25,11 @@ export const getMovieList = () => async dispatch => {
 
 export const getMovieBySearch = (keyWord, page) => async dispatch => {
   try {
-    const res = await axios.get(`http://www.omdbapi.com?apikey=faf7e5bb&s=${keyWord}&page=${page}`)
-    console.log(res.data.Search)
+    const res = await axios({
+      method: 'GET',
+      url: "http://www.omdbapi.com/?apikey=faf7e5bb&",
+      params: {s: keyWord, page: page}
+    })
     dispatch({
       type: RETRIEVE_MOVIE_SEARCH,
       data: res.data.Search,
@@ -41,8 +47,11 @@ export const getMovieBySearch = (keyWord, page) => async dispatch => {
 
 export const getMovieBySearchMore = (keyWord, page) => async dispatch => {
   try {
-    const res = await axios.get(`http://www.omdbapi.com?apikey=faf7e5bb&s=${keyWord}&page=${page}`)
-    console.log(res.data.Search)
+    const res = await axios({
+      method: 'GET',
+      url: "http://www.omdbapi.com/?apikey=faf7e5bb&",
+      params: {s: keyWord, page: page}
+    })
     dispatch({
       type: RETRIEVE_MOVIE_SEARCH_MORE,
       data: res.data.Search,
