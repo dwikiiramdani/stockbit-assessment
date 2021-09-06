@@ -1,8 +1,8 @@
-import {RETRIEVE_MOVIE_LIST, RETRIEVE_MOVIE_SEARCH} from '../util/types'
+import {RETRIEVE_MOVIE_LIST, RETRIEVE_MOVIE_SEARCH, RETRIEVE_MOVIE_SEARCH_MORE} from '../util/types'
 
 const initialState = {
     movies:[],
-    loading:true
+    totalResults: 0,
 }
 
 function rootReducer(state = initialState, action){
@@ -11,12 +11,20 @@ function rootReducer(state = initialState, action){
 
         case RETRIEVE_MOVIE_LIST:
         return {
-            movies:action.payload,
+            movies:action.data,
+            totalResults: action.totalResults,
         }
 
         case RETRIEVE_MOVIE_SEARCH:
         return {
-            movies:action.payload,
+            movies:action.data,
+            totalResults: action.totalResults,
+        }
+
+        case RETRIEVE_MOVIE_SEARCH_MORE:
+        return {
+            movies:action.data,
+            totalResults: action.totalResults,
         }
 
         default: return state

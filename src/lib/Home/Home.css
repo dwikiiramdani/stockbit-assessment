@@ -2,17 +2,6 @@
   text-align: center;
 }
 
-.Home-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .Home-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
-}
-
 .Home-header {
   min-height: 100px;
   display: flex;
@@ -24,18 +13,6 @@
 
 .Home-link {
   color: rgb(112, 76, 182);
-}
-
-@keyframes Home-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
 }
 
 .Home-button {
@@ -57,4 +34,25 @@
   padding: 2px;
   text-align: center;
   margin-right: 12px;
+}
+
+.Home-movie-list{
+  display: flex;
+  flex-direction: row;
+  margin: 12px;
+  align-items: center
+}
+
+.Home-movie-list-content{
+  display:flex;
+  flex-direction: column;
+  justify-content:start;
+  align-items: start;
+  align-content: start;
+  padding-left: 16px;
+}
+
+.Home-movie-list-text{
+  padding: 0px;
+  text-align: start;
 }

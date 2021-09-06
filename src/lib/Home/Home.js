@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './home.css';
-import Movies from '../Home/component/homeComponent';
 import { getMovieBySearch, getMovieList } from './action/homeAction';
 
 function Home() {
-  const selectMovie = useSelector((state) => state.movies);
   const [keyWord, setKeyWord] = useState('')
+  const [page, setPage] = useState(1)
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movies);
+  const totalResults = useSelector((state) => state.totalResults);
   useEffect(() => {
     dispatch(getMovieList())
   }, [dispatch])
@@ -17,29 +17,34 @@ function Home() {
     <div className="Home">
       <header className="Home-header">
         <h2>
-          Stockbit React Dev Test
+          Stockbit React Dev Test {totalResults}
         </h2>
         <div>
           <input
             className="Home-textbox"
-            aria-label="Set increment amount"
+            aria-label="Find your movie"
             value={keyWord}
             onChange={(val) => setKeyWord(val.target.value)}
           />
           <button
             className="Home-button"
             onClick={() => {
-              console.log(keyWord)
-              dispatch(getMovieBySearch(keyWord))
-              console.log(keyWord)
+              dispatch(getMovieBySearch(keyWord, page))
             }}
           >
             Find Movie
           </button>
           <div>
-            {movies.map(u =>
-              <React.Fragment key={u.id}>
-                <h6 >{u.Title}</h6>
+            {movies.map(item =>
+              <React.Fragment key={item.id}>
+                <div className="Home-movie-list">
+                  <img src={item.Poster} height="160" width="100" />
+                  <div className="Home-movie-list-content">
+                    <h4 className="Home-movie-list-text">{item.Title}</h4>
+                    <p className="Home-movie-list-text">{item.Year}</p>
+                    <p className="Home-movie-list-text">{item.Type}</p>
+                  </div>
+                </div>
               </React.Fragment>
             )}
           </div>
