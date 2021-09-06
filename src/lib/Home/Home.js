@@ -2,11 +2,14 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './home.css';
 import { getMovieBySearch, getMovieBySearchMore, getMovieList } from './action/homeAction';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 function Home() {
   const [keyWord, setKeyWord] = useState('Batman')
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [popUpImage, setPopUpImage] = useState('')
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movies);
   const totalResults = useSelector((state) => state.totalResults);
@@ -14,9 +17,9 @@ function Home() {
     dispatch(getMovieList())
   }, [dispatch])
 
-  const handleLoadMore = () =>  {
+  const handleLoadMore = () => {
     setLoading(true)
-    dispatch(getMovieBySearchMore(keyWord, page+1))
+    dispatch(getMovieBySearchMore(keyWord, page + 1))
     setTimeout(() => {
       setLoading(false)
     }, 500);
@@ -26,16 +29,16 @@ function Home() {
 
   const lastMovieElement = useCallback(node => {
     if (loading) return
-    const {current: currentObserver} = observer
+    const { current: currentObserver } = observer
     if (observer.current) currentObserver.disconnect()
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && movies.length < totalResults) {
         handleLoadMore()
-        setPage(page+1)
+        setPage(page + 1)
       }
     })
     if (node) observer.current.observe(node)
-  },)
+  })
 
   return (
     <div className="Home">
@@ -67,7 +70,22 @@ function Home() {
             {movies.map((item, index) =>
               <React.Fragment key={item.imdbID}>
                 <div className="Home-movie-list" key={item.imdbID} ref={movies.length === index + 1 ? lastMovieElement : null}>
-                  <img src={item.Poster} height="160" width="100" />
+                  <Popup
+                    trigger={<img src={item.Poster} height="160" width="100" />}
+                    modal
+                    nested
+                  >
+                    {close => (
+                      <div className="modal">
+                        <button className="close" onClick={close}>
+                          &times;
+                        </button>
+                        <div className="header">
+                          <img src={item.Poster} height="480" width="320" />
+                        </div>
+                      </div>
+                    )}
+                  </Popup>
                   <div className="Home-movie-list-content">
                     <h4 className="Home-movie-list-text">{item.Title}</h4>
                     <p className="Home-movie-list-text">{item.Year}</p>
