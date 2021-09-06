@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import './Home.css';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import './home.css';
+import Movies from '../Home/component/homeComponent';
+import { getMovieBySearch, getMovieList } from './action/homeAction';
 
 function Home() {
+  const selectMovie = useSelector((state) => state.movies);
   const [keyWord, setKeyWord] = useState('')
+  const dispatch = useDispatch();
+  const movies = useSelector((state) => state.movies);
+  useEffect(() => {
+    dispatch(getMovieList())
+  }, [dispatch])
+
   return (
     <div className="Home">
       <header className="Home-header">
@@ -19,12 +28,23 @@ function Home() {
           />
           <button
             className="Home-button"
-            onClick={() => {}}
+            onClick={() => {
+              console.log(keyWord)
+              dispatch(getMovieBySearch(keyWord))
+              console.log(keyWord)
+            }}
           >
             Find Movie
           </button>
+          <div>
+            {movies.map(u =>
+              <React.Fragment key={u.id}>
+                <h6 >{u.Title}</h6>
+              </React.Fragment>
+            )}
+          </div>
         </div>
-        
+
       </header>
     </div>
   );
