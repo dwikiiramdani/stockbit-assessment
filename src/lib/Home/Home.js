@@ -6,13 +6,14 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
 function Home() {
-  const [keyWord, setKeyWord] = useState('Batman')
-  const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false)
-  const [popUpImage, setPopUpImage] = useState('')
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movies);
   const totalResults = useSelector((state) => state.totalResults);
+
+  const [keyWord, setKeyWord] = useState('Batman')
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     dispatch(getMovieList())
   }, [dispatch])
